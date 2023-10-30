@@ -1,9 +1,9 @@
 {
   "name": "@wocwin/t-antd-ui",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Vue 中基于ant-design-vue二次封装基础组件文档",
   "author": "wocwin <wocwin@163.com>",
-  "license": "ISC",
+  "license": "MIT",
   "private": false,
   "main": "lib/t-antd-ui.umd.min.js",
   "scripts": {
@@ -33,6 +33,7 @@
     "vue-clipboard2": "^0.3.1",
     "vue-draggable-resizable": "^2.3.0",
     "vue-highlight.js": "^3.1.0",
+    "vue-property-decorator": "^8.4.1",
     "vue-router": "^3.4.3",
     "vue-seamless-scroll": "^1.1.23",
     "vue-server-renderer": "2.6.14",
