@@ -1,7 +1,7 @@
 <template>
   <t-antd-layout-page>
     <t-antd-layout-page-item>
-      <t-antd-layout-table
+      <t-antd-table
         :columns="columns"
         :dataSource="sourceData"
         :tableOpt="{bordered:true,scroll: {x: '110%'}}"
@@ -9,7 +9,7 @@
         <template #materialName="{text}">
           <a-button>{{text}}</a-button>
         </template>
-      </t-antd-layout-table>
+      </t-antd-table>
     </t-antd-layout-page-item>
   </t-antd-layout-page>
 </template>

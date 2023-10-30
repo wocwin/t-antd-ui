@@ -1,9 +1,9 @@
 <template>
   <t-antd-layout-page>
     <t-antd-layout-page-item>
-      <t-antd-layout-table
+      <t-antd-table
         title="样品列表"
-        :pagination="pageOpt"
+        :pagination="pagination"
         @paginationChange="handleTableChange"
         :columns="columns"
         :dataSource="sourceData"
@@ -14,7 +14,7 @@
           <a-button type="primary" @click="anew">重新处理</a-button>
           <a-button type="primary" @click="toVoids">作废</a-button>
         </template>
-      </t-antd-layout-table>
+      </t-antd-table>
     </t-antd-layout-page-item>
   </t-antd-layout-page>
 </template>
@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       // 分页器参数
-      pageOpt: {
+      pagination: {
         current: 1,
         pageSize: 10,
         total: 0

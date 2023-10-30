@@ -1,10 +1,10 @@
 <template>
   <t-antd-layout-page>
     <t-antd-layout-page-item>
-      <t-antd-layout-table
+      <t-antd-table
         title="样品列表222"
         column-setting
-        :pagination="pageOpt"
+        :pagination="pagination"
         @paginationChange="handleTableChange"
         :columns="columns"
         :dataSource="sourceData"
@@ -16,7 +16,7 @@
           <a-button type="primary" @click="anew" :disabled="selectedRowKeys.length === 0 ">重新处理</a-button>
           <a-button type="primary" @click="toVoids" :disabled="selectedRowKeys.length === 0 ">作废</a-button>
         </template>
-      </t-antd-layout-table>
+      </t-antd-table>
     </t-antd-layout-page-item>
   </t-antd-layout-page>
 </template>
@@ -28,7 +28,7 @@ export default {
       // 复选框选中项
       selectedRowKeys: [],
       // 分页器参数
-      pageOpt: {
+      pagination: {
         current: 1,
         pageSize: 10,
         total: 0

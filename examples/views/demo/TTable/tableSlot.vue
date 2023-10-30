@@ -1,10 +1,10 @@
 <template>
   <t-antd-layout-page>
     <t-antd-layout-page-item>
-      <t-antd-layout-table
+      <t-antd-table
         title="table插槽，默认table将不渲染"
         @paginationChange="handleTableChange"
-        :pagination="pageOpt"
+        :pagination="pagination"
       >
         <!-- 表格外操作| -->
         <template #btn>
@@ -13,7 +13,7 @@
           <a-button type="primary" :disabled="selectedRowKeys.length === 0 ">作废</a-button>
         </template>
         <template #table>table插槽</template>
-      </t-antd-layout-table>
+      </t-antd-table>
     </t-antd-layout-page-item>
   </t-antd-layout-page>
 </template>
@@ -25,7 +25,7 @@ export default {
       // 复选框选中项
       selectedRowKeys: [],
       // 分页器参数
-      pageOpt: {
+      pagination: {
         current: 1,
         pageSize: 10,
         total: 0

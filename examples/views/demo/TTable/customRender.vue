@@ -1,7 +1,7 @@
 <template>
   <t-antd-layout-page>
     <t-antd-layout-page-item>
-      <t-antd-layout-table :columns="columns" :dataSource="sourceData" />
+      <t-antd-table :columns="columns" :dataSource="sourceData" />
     </t-antd-layout-page-item>
   </t-antd-layout-page>
 </template>

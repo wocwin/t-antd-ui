@@ -1,7 +1,7 @@
 <template>
   <t-antd-layout-page>
     <t-antd-layout-page-item>
-      <t-antd-layout-table title="样品列表444" :columns="columns" :dataSource="sourceData" />
+      <t-antd-table title="样品列表444" :columns="columns" :dataSource="sourceData" />
     </t-antd-layout-page-item>
   </t-antd-layout-page>
 </template>

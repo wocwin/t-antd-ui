@@ -1,9 +1,9 @@
 <template>
   <t-antd-layout-page>
     <t-antd-layout-page-item>
-      <t-antd-layout-table
+      <t-antd-table
         title="样品列表"
-        :pagination="pageOpt"
+        :pagination="pagination"
         column-setting
         @showSizeChange="onShowSizeChange"
         @paginationChange="handleTableChange"
@@ -19,7 +19,7 @@ export default {
   data() {
     return {
       // 分页器参数
-      pageOpt: {
+      pagination: {
         current: 1,
         pageSize: 10,
         total: 0,
@@ -143,7 +143,7 @@ export default {
     },
     onShowSizeChange(current, pageSize) {
       console.log(33, current, pageSize)
-      this.pageOpt.pageSize = pageSize
+      this.pagination.pageSize = pageSize
     }
   }
 }

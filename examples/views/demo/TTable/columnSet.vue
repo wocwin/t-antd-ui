@@ -1,7 +1,7 @@
 <template>
   <t-antd-layout-page>
     <!-- <t-antd-layout-page-item> -->
-    <t-antd-layout-table
+    <t-antd-table
       title="列设置"
       :columns="columns"
       column-setting
