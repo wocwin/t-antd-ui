@@ -101,3 +101,17 @@ export function digitUppercase(num) {
     return head + s.replace(/(零.)*零元/, '元').replace(/(零.)+/g, '零').replace(/^整$/, '零元整')
   }
 }
+
+export function debounce(func, wait) {
+  let timeout = 0
+  return (...args) => {
+    clearTimeout(timeout)
+    timeout = setTimeout(() => {
+      func(...args)
+    }, wait)
+    // 手动取消
+    return () => {
+      clearTimeout(timeout)
+    }
+  }
+}

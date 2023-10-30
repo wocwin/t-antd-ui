@@ -1,21 +1,23 @@
 import TAntdLayoutPage from './layout-page'
 import TantdLayoutPageItem from './layout-page-item'
-import TAntdConfigform from './config-form'
-import TAntdLayoutConditional from './layout-conditional'
-import TAntdLayoutTable from './layout-table'
+import TAntdForm from './form'
+import TAntdSelect from './select'
+import TAntdConditional from './conditinal'
+import TAntdTable from './table'
 import TAntdRangePicker from './range-picker'
-import TAntdLayoutForm from './layout-form'
+import TAntdModuleForm from './module-form'
 import { TAntdModal, TAntdProtocol } from './modal'
 import { version } from '../package.json'
 // 存储组件列表
 const components = [
-  TAntdConfigform,
-  TAntdLayoutConditional,
+  TAntdForm,
+  TAntdConditional,
   TAntdLayoutPage,
   TantdLayoutPageItem,
-  TAntdLayoutTable,
+  TAntdTable,
   TAntdRangePicker,
-  TAntdLayoutForm,
+  TAntdModuleForm,
+  TAntdSelect,
   TAntdModal,
   TAntdProtocol
 ]
@@ -35,13 +37,14 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 // 按需引入
 export {
-  TAntdConfigform,
-  TAntdLayoutConditional,
+  TAntdForm,
+  TAntdConditional,
   TAntdLayoutPage,
   TantdLayoutPageItem,
-  TAntdLayoutTable,
+  TAntdTable,
   TAntdRangePicker,
-  TAntdLayoutForm,
+  TAntdModuleForm,
+  TAntdSelect,
   TAntdModal,
   TAntdProtocol
 }
