@@ -10,3 +10,4 @@ export {
   TAntdModal,
   TAntdProtocol
 }
+// export default TAntdModal;

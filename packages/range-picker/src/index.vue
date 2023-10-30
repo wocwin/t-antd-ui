@@ -1,12 +1,14 @@
 <template>
-  <div class="dh_range_picker">
+  <div class="t_antd_range_picker">
     <component :is="startCompOpt.is" v-bind="startCompOpt.bind" v-on="startCompOpt.event" />
     <div class="icon">-</div>
     <component :is="endCompOpt.is" v-bind="endCompOpt.bind" v-on="endCompOpt.event" />
   </div>
 </template>
 <script>
-import { DatePicker } from 'ant-design-vue'
+import {
+  DatePicker
+} from 'ant-design-vue'
 import moment from 'moment'
 export default {
   name: 'TAntdRangePicker',
@@ -17,7 +19,8 @@ export default {
   props: {
     value: {
       type: Array,
-      default: () => [moment().startOf('days'), moment()]
+      default: () => [null, null]
+      // default: () => [moment().startOf('days'), moment()]
     },
     format: {
       type: String,
@@ -54,13 +57,13 @@ export default {
     },
     getCalendarContainer: Function
   },
-  data () {
+  data() {
     return {
       endOpen: false
     }
   },
   computed: {
-    startCompOpt () {
+    startCompOpt() {
       const { type, showTime, format, disabledStartDate, allowClear, value, handleStartOpenChange, dateStartChange, inputReadOnly, placeholder, getCalendarContainer } = this
       const opt = {
         bind: {
@@ -85,10 +88,13 @@ export default {
         case 'month':
           opt.is = DatePicker.MonthPicker
           break
+
+        default:
+          break
       }
       return opt
     },
-    endCompOpt () {
+    endCompOpt() {
       const { type, showTime, format, disabledEndDate, allowClear, value, handleEndOpenChange, dateEndChange, endOpen, inputReadOnly, placeholder, getCalendarContainer } = this
       const opt = {
         bind: {
@@ -115,29 +121,43 @@ export default {
         case 'month':
           opt.is = DatePicker.MonthPicker
           break
+
+        default:
+          break
       }
       return opt
     },
-    lastOptionalDate () { // 结束日期可选的最后的时间
+    lastOptionalDate() { // 结束日期可选的最后的时间
       return this.getLastOptionalDate()
+    },
+    agentDisabledRange() {
+      const { disabledRange, type, showTime } = this
+      if (type === 'day') { // 单位天且可设置时间
+        return disabledRange
+      } else {
+        return [
+          disabledRange[0] ? disabledRange[0].startOf(type) : null,
+          disabledRange[1] ? disabledRange[1].endOf(type) : null
+        ]
+      }
     }
   },
   methods: {
-    getLastOptionalDate (newVal = false) { // 获取可选的最后的时间
-      const { disabledRange, langest, type, value } = this
+    getLastOptionalDate(newVal = false) { // 获取可选的最后的时间
+      const { agentDisabledRange: disabledRange, langest, type, value, showTime } = this
       newVal = newVal || value
       let lastOptionalDate = false // 默认无限制
       if (langest && disabledRange[1]) { // 存在最长时长限制且存在结束日期禁用要求
-        lastOptionalDate = moment(newVal[0]).add(langest - 1, type).valueOf() < moment(disabledRange[1]).endOf(type).valueOf() ? moment(newVal[0]).add(langest - 1, type) : disabledRange[1]
+        lastOptionalDate = disabledRange[1].isBefore(moment(newVal[0]).add(langest - 1, type).endOf(type)) ? disabledRange[1] : moment(newVal[0]).add(langest - 1, type).endOf(type)
       } else if (langest && !disabledRange[1]) { // 存在最长时长限制且无结束日期禁用要求
-        lastOptionalDate = moment(newVal[0]).add(langest - 1, type)
+        lastOptionalDate = moment(newVal[0]).add(langest - 1, type).endOf(type)
       } else if (!langest && disabledRange[1]) { // 不存在最长时长限制且有结束日期禁用要求
         lastOptionalDate = disabledRange[1]
       }
-      return lastOptionalDate === false ? false : moment(lastOptionalDate).endOf(type)
+      return lastOptionalDate === false ? false : lastOptionalDate.clone()
     },
-    disabledStartDate (current) {
-      const { disabledRange, type } = this
+    disabledStartDate(current) {
+      const { agentDisabledRange: disabledRange, type } = this
       if (!current) {
         return false
       } else if ((!disabledRange[0] || current.valueOf() >= moment(disabledRange[0]).startOf(type).valueOf()) && (!disabledRange[1] || current.valueOf() <= moment(disabledRange[1]).endOf(type).valueOf())) {
@@ -146,7 +166,7 @@ export default {
         return true
       }
     },
-    disabledEndDate (current) {
+    disabledEndDate(current) {
       const { lastOptionalDate, type } = this
       if (!current) {
         return false
@@ -156,54 +176,50 @@ export default {
         return true
       }
     },
-    handleStartOpenChange (open) {
+    handleStartOpenChange(open) {
       this.$emit('openChange')
       if (!open) {
         this.endOpen = true
       }
     },
-    handleEndOpenChange (open) {
+    handleEndOpenChange(open) {
       this.$emit('openChange')
       this.endOpen = open
     },
-    dateStartChange (date) {
+    dateStartChange(date) {
+      if (!date) { // clear
+        this.$emit('change', [null, null])
+        return
+      }
+      const { type } = this
       const lastOptionalDate = this.getLastOptionalDate([date, this.value[1]])
       let endDate = this.value[1]
       if (this.value[1] && date.valueOf() > this.value[1].valueOf()) { // 选择开始时间大与当前结束时间
-        endDate = date
+        endDate = lastOptionalDate && lastOptionalDate.isBefore(date.clone().endOf(type)) ? lastOptionalDate : date.clone().endOf(type)
       } else if (lastOptionalDate && endDate && endDate.valueOf() > lastOptionalDate.valueOf()) { // 选择开始时间大于可选的时间
         endDate = lastOptionalDate
       }
-      this.$emit('change', this.getResult([
-        date,
+      this.$emit('change', [
+        date?.clone(),
         endDate
-      ]))
+      ])
     },
-    dateEndChange (date) {
-      this.$emit('change', this.getResult([
-        this.value[0],
-        date
-      ]))
-    },
-    getResult (val) { // 获取返回结果
+    dateEndChange(date) {
       const { type, showTime } = this
-      let result = [
-        val[0] === null ? null : moment(val[0]),
-        val[1] === null ? null : moment(val[1])
-      ]
-      if (type !== 'day' || !showTime) { // 只要不是天或不显示时间，则默认取当前类型的最开始和最后时间
-        result = [
-          val[0] === null ? null : moment(val[0]).startOf(type),
-          val[1] === null ? null : moment(val[1]).endOf(type)
-        ]
+      if (!showTime) {
+        date = date?.clone().endOf(type)
       }
-      return result
+      const lastOptionalDate = this.getLastOptionalDate([this.value[0], date])
+      this.$emit('change', [
+        this.value[0],
+        lastOptionalDate ? (date?.isBefore(lastOptionalDate) ? date : lastOptionalDate) : date
+      ])
     }
   }
 }
 </script>
 <style lang="scss" scoped>
-.dh_range_picker {
+.t_antd_range_picker {
   display: flex;
   align-items: center;
   .icon {

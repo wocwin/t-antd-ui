@@ -1,4 +1,4 @@
-import TAntdLayoutPageItem from './src'
+import TAntdLayoutPageItem from '../layout-page/src/layout-page-item'
 
 /* istanbul ignore next */
 TAntdLayoutPageItem.install = function (Vue) {
