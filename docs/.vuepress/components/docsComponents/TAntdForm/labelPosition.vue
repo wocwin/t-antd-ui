@@ -1,6 +1,11 @@
 <template>
   <t-antd-layout-page>
     <t-antd-layout-page-item>
+      <a-radio-group v-model="formOpts.layout" style="margin-bottom:15px;">
+        <a-radio-button value="horizontal">horizontal布局</a-radio-button>
+        <a-radio-button value="inline">inline布局</a-radio-button>
+        <a-radio-button value="vertical">vertical布局</a-radio-button>
+      </a-radio-group>
       <t-antd-form
         :ref-obj.sync="formOpts.ref"
         :formOpts="formOpts"
@@ -18,27 +23,28 @@ export default {
     return {
       // form表单
       formOpts: {
+        layout: 'horizontal',
         ref: null,
         formData: {
-          account: null, // *用户账号
-          password: null, // *用户密码
-          name: null, // *用户昵称
+          account: '', // *用户账号
+          password: '', // *用户密码
+          name: '', // *用户昵称
           sex: undefined, // *性别: 0:男 1:女
           hobby: [], // *爱好: 0:男 1:女
-          phone: null, // 手机号码
-          qq: null, // qq
+          phone: '', // 手机号码
+          qq: '', // qq
           accountType: undefined, // *用户类型: 0: 手机注册 1: 论坛注册 2: 管理平台添加
-          email: null, // 邮箱
-          desc: null, // 描述
-          number: null, // 计算器
+          email: '', // 邮箱
+          desc: '', // 描述
+          number: '', // 计算器
           status: undefined // *状态: 0：停用，1：启用(默认为1)',
         },
         fieldList: [
-          { label: '账号', value: 'account', type: 'input', comp: 'a-input', prepend: '测试', formItemBind: { labelWidth: '400px' } },
+          { label: '账号', value: 'account', type: 'input', comp: 'a-input', event: 'account' },
           { label: '密码', value: 'password', type: 'password', comp: 'a-input' },
-          { label: '昵称', value: 'name', type: 'input', comp: 'a-input', isTrim: true },
+          { label: '昵称', value: 'name', type: 'input', comp: 'a-input' },
           { label: '性别', value: 'sex', type: 'select-arr', comp: 'a-select', list: 'sexList', bind: { disabled: false }, arrLabel: 'key', arrKey: 'value' },
-          { label: '平台用户', value: 'accountType', type: 'select-obj', comp: 'a-select', list: 'accountTypeList' },
+          { label: '平台用户', value: 'accountType', type: 'select-obj', comp: 'a-select', list: 'accountTypeList', childSlotName: 'accountType' },
           { label: '状态', value: 'status', type: 'select-arr', list: 'statusList', comp: 'a-select', arrLabel: 'key', arrKey: 'value' },
           { label: '爱好', value: 'hobby', type: 'checkbox', comp: 'a-checkbox-group', list: 'hobbyList', event: 'checkbox' },
           { label: '手机号码', value: 'phone', type: 'input', comp: 'a-input', bind: { maxLength: 11 } },

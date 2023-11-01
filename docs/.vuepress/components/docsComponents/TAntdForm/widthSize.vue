@@ -1,10 +1,18 @@
 <template>
   <t-antd-layout-page>
     <t-antd-layout-page-item>
+      <a-radio-group v-model="widthSize" style="margin-bottom:15px;">
+        <a-radio-button :value="1">一行展示</a-radio-button>
+        <a-radio-button :value="2">一行展示2项</a-radio-button>
+        <a-radio-button :value="3">一行展示3项</a-radio-button>
+        <a-radio-button :value="4">一行展示4项</a-radio-button>
+      </a-radio-group>
       <t-antd-form
         :ref-obj.sync="formOpts.ref"
         :formOpts="formOpts"
-        :widthSize="1"
+        :widthSize="widthSize"
+        :labelCol="{ span:widthSize*2}"
+        :wrapperCol="{ span:24-widthSize*2}"
         @handleEvent="handleEvent"
       />
     </t-antd-layout-page-item>
@@ -16,27 +24,28 @@ export default {
   name: 'dhFormDemo',
   data() {
     return {
+      widthSize: 1,
       // form表单
       formOpts: {
         ref: null,
         formData: {
-          account: null, // *用户账号
-          password: null, // *用户密码
-          name: null, // *用户昵称
+          account: undefined, // *用户账号
+          password: undefined, // *用户密码
+          name: undefined, // *用户昵称
           sex: undefined, // *性别: 0:男 1:女
           hobby: [], // *爱好: 0:男 1:女
-          phone: null, // 手机号码
-          qq: null, // qq
+          phone: undefined, // 手机号码
+          qq: undefined, // qq
           accountType: undefined, // *用户类型: 0: 手机注册 1: 论坛注册 2: 管理平台添加
-          email: null, // 邮箱
-          desc: null, // 描述
-          number: null, // 计算器
+          email: undefined, // 邮箱
+          desc: undefined, // 描述
+          number: undefined, // 计算器
           status: undefined // *状态: 0：停用，1：启用(默认为1)',
         },
         fieldList: [
-          { label: '账号', value: 'account', type: 'input', comp: 'a-input', prepend: '测试', formItemBind: { labelWidth: '400px' } },
+          { label: '账号', value: 'account', type: 'input', comp: 'a-input', event: 'account' },
           { label: '密码', value: 'password', type: 'password', comp: 'a-input' },
-          { label: '昵称', value: 'name', type: 'input', comp: 'a-input', isTrim: true },
+          { label: '昵称', value: 'name', type: 'input', comp: 'a-input' },
           { label: '性别', value: 'sex', type: 'select-arr', comp: 'a-select', list: 'sexList', bind: { disabled: false }, arrLabel: 'key', arrKey: 'value' },
           { label: '平台用户', value: 'accountType', type: 'select-obj', comp: 'a-select', list: 'accountTypeList' },
           { label: '状态', value: 'status', type: 'select-arr', list: 'statusList', comp: 'a-select', arrLabel: 'key', arrKey: 'value' },
@@ -44,7 +53,7 @@ export default {
           { label: '手机号码', value: 'phone', type: 'input', comp: 'a-input', bind: { maxLength: 11 } },
           { label: 'QQ', value: 'qq', type: 'input', comp: 'a-input' },
           { label: '邮箱', value: 'email', type: 'input', comp: 'a-input' },
-          { label: '计数器', value: 'number', type: 'inputNumber', bind: {}, comp: 'a-input-number' },
+          { label: '计数器', value: 'number', type: 'inputNumber', bind: { controls: false, min: 2, max: 99 }, comp: 'a-input-number' },
           { label: '描述', value: 'desc', type: 'textarea', comp: 'a-input', widthSize: 1 }
         ],
         operatorList: [
