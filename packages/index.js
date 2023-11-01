@@ -4,7 +4,7 @@ import TAntdForm from './form'
 import TAntdSelect from './select'
 import TAntdConditional from './conditinal'
 import TAntdTable from './table'
-import TAntdRangePicker from './range-picker'
+import TAntdDatePicker from './date-picker'
 import TAntdModuleForm from './module-form'
 import { TAntdModal, TAntdProtocol } from './modal'
 import { version } from '../package.json'
@@ -15,7 +15,7 @@ const components = [
   TAntdLayoutPage,
   TantdLayoutPageItem,
   TAntdTable,
-  TAntdRangePicker,
+  TAntdDatePicker,
   TAntdModuleForm,
   TAntdSelect,
   TAntdModal,
@@ -42,7 +42,7 @@ export {
   TAntdLayoutPage,
   TantdLayoutPageItem,
   TAntdTable,
-  TAntdRangePicker,
+  TAntdDatePicker,
   TAntdModuleForm,
   TAntdSelect,
   TAntdModal,

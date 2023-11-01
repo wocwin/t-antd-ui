@@ -84,7 +84,7 @@ export default {
           placeholder = '请输入' + row.label
         } else if (row.comp.includes('select')) {
           placeholder = '请选择' + row.label
-        } else if (row.comp === 'TAntdRangePicker') {
+        } else if (row.comp === 'TAntdDatePicker') {
           placeholder = ['开始时间', '结束时间']
         } else {
           placeholder = row.label

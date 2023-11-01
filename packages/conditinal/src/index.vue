@@ -151,7 +151,7 @@ export default {
             opt.bind = opt.bind || {}
             opt.bind['getCalendarContainer'] = opt.bind['getCalendarContainer'] || this.getEl
           }
-          if (opt.comp === 'TAntdRangePicker' || opt.comp.name === 'ADatePicker') { // 设置弹窗渲染父节点
+          if (opt.comp === 'TAntdDatePicker' || opt.comp.name === 'ADatePicker') { // 设置弹窗渲染父节点
             opt.bind = opt.bind || {}
             opt.bind['getCalendarContainer'] = opt.bind['getCalendarContainer'] || this.getEl
           }

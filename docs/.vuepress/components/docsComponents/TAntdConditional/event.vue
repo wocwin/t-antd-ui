@@ -106,7 +106,7 @@ export default {
         },
         ManualDealedTime: {
           label: "处理时间",
-          comp: "TAntdRangePicker",
+          comp: "TAntdDatePicker",
           changeEvent: "change",
           span: 2,
           type: "day",
@@ -119,7 +119,7 @@ export default {
         },
         SamplingTime: {
           label: "化验时间",
-          comp: "TAntdRangePicker",
+          comp: "TAntdDatePicker",
           changeEvent: "change",
           span: 2,
           type: "day",
@@ -132,7 +132,7 @@ export default {
         },
         ReceiveTime: {
           label: "采集发送时间",
-          comp: "TAntdRangePicker",
+          comp: "TAntdDatePicker",
           changeEvent: "change",
           span: 2,
           type: "day",
