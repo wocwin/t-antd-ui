@@ -4,7 +4,6 @@
 
 > 基于 Element-plus 二次封装基础组件地址
 
-## [Vue2 基于Element-ui封装基础组件码云地址](https://gitee.com/wocwin/t-ui)
 ## [Vue2 基于Element-ui封装基础组件GitHub地址](https://github.com/wocwin/t-ui)
 
 > 基于 Element-ui 二次封装基础组件地址
@@ -15,7 +14,7 @@
 
 这是我在学习 Vue 中[ant-design-vue](https://www.antdv.com/docs/vue/introduce-cn/)二次封装基础组件文档，希望对你有用。可查看 [详细组件案例文档](https://wocwin.github.io/t-antd-ui/) 预览
 
-<!-- <p align="center">
+<p align="center">
   <a href="https://github.com/vuejs/vue" target="_blank">
     <img src="https://img.shields.io/badge/vue-2.6.14-brightgreen.svg" alt="vue">
   </a>
@@ -28,7 +27,7 @@
    <a href="https://www.npmjs.com/package/@wocwin/t-antd-ui" target="_blank">
       <img alt="npm" src="https://img.shields.io/npm/v/@wocwin/t-antd-ui.svg" />
     </a>
-</p> -->
+</p>
 
 ## 动态效果图
 
@@ -46,7 +45,7 @@ import TAntdui from '@wocwin/t-antd-ui'
 Vue.use(TAntdui)
 
 // 2、按需引入，在单个vue文件如下引入，在注册；或者在main.js中如下引入在注册，皆可！
-import { TAntdLayoutTable, TAntdLayoutForm, TAntdLayoutConditional } from '@wocwin/t-ui'
+import { TAntdTable, TAntdForm, TAntdConditional } from '@wocwin/t-antd-ui'
 
 ```
 
@@ -54,7 +53,7 @@ import { TAntdLayoutTable, TAntdLayoutForm, TAntdLayoutConditional } from '@wocw
 
 ```js
 // 1、把packages文件夹复制，放在自己项目中
-// 2、假设 packages 与 src是同级，那么src下 main.js 如下操作即可全局使用t-ui
+// 2、假设 packages 与 src是同级，那么src下 main.js 如下操作即可全局使用t-antd-ui
 import TAntdui from '../packages'
 Vue.use(TAntdui)
 ```
