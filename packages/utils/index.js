@@ -42,7 +42,7 @@ export function percentFilter(num) {
  * @param {String} label  数据源的label字段（默认：dictLabel）
  */
 export function constantEscape(value, list, key, label) {
-  const res = list.find((item) => {
+  const res = list?.find((item) => {
     return item[key] === value
   })
   return res && res[label]

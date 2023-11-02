@@ -36,6 +36,20 @@ module.exports = {
           ]
         },
         {
+          title: '详情组件',
+          collapsable: false,
+          children: [
+            'TAntdDetail/base',
+            'TAntdDetail/border',
+            'TAntdDetail/descColumn',
+            'TAntdDetail/layout',
+            'TAntdDetail/echo',
+            'TAntdDetail/slotName',
+            'TAntdDetail/tooltip',
+            'TAntdDetail/help',
+          ]
+        },
+        {
           title: '下拉选择组件',
           collapsable: false,
           children: [

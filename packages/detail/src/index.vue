@@ -1,141 +1,92 @@
 <template>
-  <a-page-header class="t_layout_detail" :title="title" :sub-title="subTitle" @back="back">
-    <slot slot="extra" name="extra"></slot>
-    <slot slot="default" name="default"></slot>
-    <a-collapse
-      :bordered="false"
-      :defaultActiveKey="defaultActiveKey"
-      v-if="Object.keys(this.descData).length > 1"
-    >
-      <a-collapse-panel :header="val.title" v-for="(val, index) in descData" :key="index">
-        <a-descriptions size="middle" :column="descColumn">
-          <a-descriptions-item
-            v-for="(item, key) in val.data"
-            :key="key"
-            :label="item.label"
-            :span="item.span || 1"
-          >
-            <template v-if="item.slotName">
-              <slot :name="item.slotName" :param="item"></slot>
-            </template>
-            <span v-else>{{ item.value }}</span>
-          </a-descriptions-item>
-        </a-descriptions>
-      </a-collapse-panel>
-    </a-collapse>
-    <div class="desc_single" v-else>
-      <a-descriptions
-        size="middle"
-        v-for="(val, index) in descData"
-        :key="index"
-        :column="descColumn"
+  <div class="t_antd_detail">
+    <a-descriptions size="middle" :column="descColumn" v-bind="$attrs">
+      <a-descriptions-item
+        v-for="(item, key) in descData"
+        :key="key"
+        :label="item.label"
+        :span="item.span || 1"
       >
-        <a-descriptions-item
-          v-for="(item, key) in val.data"
-          :key="key"
-          :label="item.label"
-          :span="item.span || 1"
-        >
-          <template v-if="item.slotName">
-            <slot :name="item.slotName" :param="item"></slot>
-          </template>
-          <span v-else>{{ item.value }}</span>
-        </a-descriptions-item>
-      </a-descriptions>
-    </div>
-    <slot slot="footer" name="footer"></slot>
-    <template v-if="tabs && !$slots.footer" slot="footer">
-      <a-tabs v-if="tabs.length > 1" :default-active-key="tabs[0].key" :animated="false">
-        <a-tab-pane v-for="tab in tabs" :key="tab.key" :tab="tab.title">
-          <slot :name="tab.key"></slot>
-        </a-tab-pane>
-      </a-tabs>
-      <slot v-else :name="tabs[0].key"></slot>
-    </template>
-  </a-page-header>
+        <template v-if="item.slotName">
+          <slot :name="item.slotName" :scope="item"></slot>
+        </template>
+        <div v-else>
+          <a-tooltip v-bind="$attrs" v-if="item.tooltip">
+            <span>
+              <span
+                v-if="item.filters&&item.filters.list"
+              >{{dataList[item.fieldName] |constantEscape(listTypeInfo[item.filters.list],(item.filters.key||'value'),(item.filters.label||'label'))}}</span>
+              <span v-else>{{ item.value }}</span>
+              <a-icon
+                :type="item.iconClass||'exclamation-circle'"
+                :style="item.style||'cursor: pointer;'"
+              />
+            </span>
+            <template #title v-if="item.tooltip">
+              <span v-if="typeof item.tooltip === 'string'">{{item.tooltip}}</span>
+              <template v-else-if="typeof item.tooltip === 'function'">
+                <render-tooltip :createElementFunc="item.tooltip" />
+              </template>
+            </template>
+          </a-tooltip>
+          <span v-else>
+            <span
+              v-if="item.filters&&item.filters.list"
+            >{{dataList[item.fieldName] |constantEscape(listTypeInfo[item.filters.list],(item.filters.key||'value'),(item.filters.label||'label'))}}</span>
+            <span v-else>{{ item.value }}</span>
+          </span>
+        </div>
+      </a-descriptions-item>
+    </a-descriptions>
+  </div>
 </template>
 <script>
-import { PageHeader, Collapse, Descriptions, Tabs } from 'ant-design-vue'
+import { Descriptions, Tooltip, Icon } from 'ant-design-vue'
+import RenderTooltip from './renderTooltip.vue'
+import { constantEscape } from '../../utils'
 export default {
   name: 'TAntdDetail',
   components: {
-    'a-collapse': Collapse,
-    'a-collapse-panel': Collapse.Panel,
-    'a-page-header': PageHeader,
+    RenderTooltip,
+    'a-icon': Icon,
+    'a-tooltip': Tooltip,
     'a-descriptions': Descriptions,
-    'a-descriptions-item': Descriptions.Item,
-    'a-tabs': Tabs,
-    'a-tab-pane': Tabs.TabPane
+    'a-descriptions-item': Descriptions.Item
+  },
+  // 过滤器
+  filters: {
+    constantEscape
   },
   props: {
-    title: String,
-    subTitle: String,
     descColumn: {
       type: Number,
       default: 4
     },
     descData: {
+      type: Array,
+      default: () => ([])
+    },
+    // 后台数据源
+    dataList: {
       type: Object,
       default: () => ({})
     },
-    tabs: Array
-  },
-  computed: {
-    defaultActiveKey() {
-      return Object.keys(this.descData)
-    }
-  },
-  mounted() {
-    console.log(7788, Object.keys(this.descData).length > 1)
-  },
-  methods: {
-    back() {
-      this.$router.go(-1)
+    // 需要解析的下拉数据
+    listTypeInfo: {
+      type: Object,
+      default: () => ({})
     }
   }
 }
 </script>
 <style lang="scss">
-.t_layout_detail {
-  padding: 0 !important;
-  .ant-page-header-heading {
-    padding: 16px 16px 0;
-    background-color: #fff !important;
-  }
-  .ant-page-header-content {
-    // padding: 12px 16px 0;
-    background-color: #fff;
-    .ant-collapse-borderless {
-      padding: 12px 16px 0;
-      background-color: #f6f6f6;
-      .ant-collapse-item {
-        background-color: #fff;
-        margin-top: 10px;
-        border: none;
-        &:first-child {
-          margin-top: 0;
-        }
-        .ant-collapse-header {
-          border-bottom: 1px solid #d9d9d9;
-        }
-        .ant-collapse-content-box {
-          padding: 16px;
-        }
-      }
-    }
-    .desc_single {
-      padding: 12px 16px 0;
+.t_antd_detail {
+  .ant-descriptions {
+    tr:nth-child(2n) {
       background-color: #fff;
     }
-  }
-  .ant-descriptions-view {
-    padding: 16px;
-  }
-  .ant-page-header-footer {
-    margin: 0;
-    .ant-tabs-bar {
-      padding: 0 16px;
-      background-color: #fff;
+    .ant-descriptions-item-label {
+      font-weight: bold;
     }
   }
 }

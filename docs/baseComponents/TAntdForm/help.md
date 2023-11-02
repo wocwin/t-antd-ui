@@ -1,6 +1,6 @@
 # TAntdForm 参数配置
 
-### 1. 简介：基于 Ant-Design-Vue FormModel 表单组件的二次封装，着重于数据层面，HTML 一行代码
+### 1. 基于 Ant-Design-Vue FormModel 表单组件的二次封装，着重于数据层面，HTML 一行代码
 
 TAntdForm 表单组件
 **代码示例：**
@@ -10,8 +10,8 @@ TAntdForm 表单组件
   :ref-obj.sync="formOpts.ref"
   :formOpts="formOpts"
   :widthSize="1"
-  :labelCol="{ span:2}" // label宽
-  :wrapperCol="{ span:22}" // 输入框宽
+  :labelCol="{ span:2}"
+  :wrapperCol="{ span:22}"
   @handleEvent="handleEvent"
 />
 //注意:ref-obj(form校验规则相当于ref)必须要‘.sync’修饰符

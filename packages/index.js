@@ -3,21 +3,23 @@ import TantdLayoutPageItem from './layout-page-item'
 import TAntdForm from './form'
 import TAntdSelect from './select'
 import TAntdConditional from './conditinal'
-import TAntdTable from './table'
 import TAntdDatePicker from './date-picker'
+import TAntdDetail from './detail'
+import TAntdTable from './table'
 import TAntdModuleForm from './module-form'
 import { TAntdModal, TAntdProtocol } from './modal'
 import { version } from '../package.json'
 // 存储组件列表
 const components = [
-  TAntdForm,
-  TAntdConditional,
   TAntdLayoutPage,
   TantdLayoutPageItem,
-  TAntdTable,
-  TAntdDatePicker,
-  TAntdModuleForm,
   TAntdSelect,
+  TAntdConditional,
+  TAntdForm,
+  TAntdDatePicker,
+  TAntdDetail,
+  TAntdTable,
+  TAntdModuleForm,
   TAntdModal,
   TAntdProtocol
 ]
@@ -45,6 +47,7 @@ export {
   TAntdDatePicker,
   TAntdModuleForm,
   TAntdSelect,
+  TAntdDetail,
   TAntdModal,
   TAntdProtocol
 }
