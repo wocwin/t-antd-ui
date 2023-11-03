@@ -1,30 +1,14 @@
 <template>
-  <div class="layout_table">
+  <div class="t_antd_table">
     <div class="header_wrap" ref="header">
+      <h3>
+        {{title}}
+        <slot name="title" />
+      </h3>
       <div class="header_right_wrap">
         <slot name="btn" />
         <column-setting v-if="columnSetting" v-model="config.columns" />
       </div>
-      <h3>
-        <!-- {{title}} -->
-        <slot name="title" />
-      </h3>
-      <Pagination
-        v-if="pagination !== null"
-        class="pagination"
-        size="small"
-        :pageSizeOptions="pageSizeOptions"
-        :show-total="total => `共 ${total} 条`"
-        show-size-changer
-        show-quick-jumper
-        :defaultCurrent="1"
-        :pageSize.sync="pagination.pageSize"
-        :current="pagination.current"
-        v-bind="pagination.paginationOpt"
-        @showSizeChange="paginationChange"
-        @change="paginationChange"
-        :total="pagination.total"
-      ></Pagination>
     </div>
     <slot name="table" />
     <div v-if="!$slots.table" class="noScroll">
@@ -47,6 +31,22 @@
         <span class="scroll_cont" :style="{ width: `${headWidth}px` }"></span>
       </div>
     </div>
+    <Pagination
+      v-if="pagination !== null"
+      class="pagination"
+      size="small"
+      :pageSizeOptions="pageSizeOptions"
+      :show-total="total => `共 ${total} 条`"
+      show-size-changer
+      show-quick-jumper
+      :defaultCurrent="1"
+      :pageSize.sync="pagination.pageSize"
+      :current="pagination.current"
+      v-bind="pagination.paginationOpt"
+      @showSizeChange="paginationChange"
+      @change="paginationChange"
+      :total="pagination.total"
+    />
   </div>
 </template>
 <script>
@@ -302,7 +302,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.layout_table {
+.t_antd_table {
   .header_wrap {
     position: sticky;
     z-index: 100;
@@ -318,14 +318,22 @@ export default {
       flex-grow: 1;
       font-size: 16px;
       line-height: 28px;
-      text-align: right;
     }
   }
   .header_right_wrap {
     display: flex;
+    .ant-btn {
+      margin-left: 10px;
+    }
+    .ant-btn:first-child {
+      margin-left: 0;
+    }
   }
   .ant-btn-link {
     height: 16px;
+  }
+  .pagination {
+    justify-content: flex-end;
   }
   ::v-deep {
     .noScroll {
