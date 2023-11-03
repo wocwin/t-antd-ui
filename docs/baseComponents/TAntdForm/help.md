@@ -20,7 +20,7 @@ TAntdForm 表单组件
 
 | 参数                | 说明                                                                                                  | 类型         | 默认值       |
 | :------------------ | :---------------------------------------------------------------------------------------------------- | :----------- | :----------- |
-| refObj              | form 表单校验规则方法 （可以参考 antd FormModel 表单方法中的 validate）                               | obj          | -            |
+| refObj              | form ref （可以调用 antd FormModel 表单中的方法 如：validate）                                        | obj          | -            |
 | className           | 自定义类名                                                                                            | String       | -            |
 | layout              | 改变表单项 label 与输入框的布局方式(默认：horizontal) /vertical                                       | String       | 'horizontal' |
 | widthSize           | 每行显示几个输入项（默认两项） 最大值 4                                                               | Number       | 2            |

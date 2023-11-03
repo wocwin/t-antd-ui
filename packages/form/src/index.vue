@@ -15,7 +15,7 @@
         :key="index"
         :prop="item.value"
         :label="item.label"
-        :class="[item.className]"
+        :class="[item.className,{'whole_line_style_vertical':item.widthSize===1&&formOpts.layout==='vertical'},{'whole_line_style':item.widthSize===1}]"
         :rules="item.rules"
         :style="getChildWidth(item)"
         v-bind="{...item.formItemBind}"
@@ -138,7 +138,9 @@ export default {
   data() {
     return {
       colSize: this.widthSize,
-      fieldList: this.formOpts.fieldList
+      fieldList: this.formOpts.fieldList,
+      labelCol: { span: 2 },
+      wrapperCol: { span: 22 }
     }
   },
   computed: {
@@ -148,8 +150,8 @@ export default {
         ? attr = {
           ...this.$attrs
         } : attr = {
-          labelCol: { span: 2 },
-          wrapperCol: { span: 22 },
+          labelCol: this.labelCol,
+          wrapperCol: this.wrapperCol,
           ...this.$attrs
         }
       return attr
@@ -279,6 +281,8 @@ export default {
           placeholder = row.label ? `请输入${row.label}` : `请输入`
         } else if (row.comp.includes('select') || row.comp.includes('cascader')) {
           placeholder = row.label ? `请选择${row.label}` : `请选择`
+        } else if (row.comp.includes('range')) {
+          placeholder = ['开始时间', '结束时间']
         } else if (!row.comp.includes('t-antd-date-picker')) {
           placeholder = row.label
         }
@@ -333,6 +337,27 @@ export default {
   .ant-select,
   .ant-calendar-picker {
     width: 100%;
+  }
+  .whole_line_style {
+    display: flex;
+    .ant-form-item-label {
+      width: 85px;
+      text-align: right;
+    }
+    .ant-form-item-control-wrapper {
+      width: calc(100% - 85px);
+    }
+  }
+  .whole_line_style_vertical {
+    display: flex;
+    flex-direction: column;
+    .ant-form-item-label {
+      text-align: left;
+      width: 100%;
+    }
+    .ant-form-item-control-wrapper {
+      width: 100%;
+    }
   }
   .footer_btn {
     display: flex;

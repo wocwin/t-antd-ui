@@ -1,5 +1,5 @@
 <template>
-  <section class="t_layout_page_item">
+  <section class="t_antd_layout_page_item">
     <slot />
   </section>
 </template>
@@ -9,7 +9,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.t_layout_page_item {
+.t_antd_layout_page_item {
   margin: 6px 6px 0;
   padding: 6px;
   background: #fff;

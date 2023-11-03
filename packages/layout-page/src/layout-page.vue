@@ -1,5 +1,5 @@
 <template>
-  <div class="t_layout_page" @scroll="e => scrollTop = e.target.scrollTop">
+  <div class="t_antd_layout_page" @scroll="e => scrollTop = e.target.scrollTop">
     <slot />
     <a-back-top :target="() => $el" />
   </div>
@@ -28,7 +28,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.t_layout_page {
+.t_antd_layout_page {
   display: flex;
   flex-direction: column;
   width: 100%;

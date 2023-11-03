@@ -1,407 +1,148 @@
 <template>
-  <div class="dh-layout-form-demo" style="width:100%;">
-    <a-button type="danger" @click="clickHandle">表单页面</a-button>
-    <a-button type="danger" @click="clickHandle1">详情页面</a-button>
-    <t-antd-layout-page style="position: relative;width:100%;">
+  <t-antd-layout-page>
+    <t-antd-layout-page-item>
       <t-antd-module-form
-        :visible.sync="visible"
-        title="单子表表单"
-        ref="layoutForm"
-        sub-title="弹窗无法支持的采用复杂表单"
-        :wrapperCol="{span:24}"
+        title="基本使用"
+        subTitle="基本使用副标题"
+        ref="sourceForm"
         :formOpts="formOpts"
-        :get-container="()=> $el"
         :submit="submit"
-        :tabs="tabs"
-        @validateError="validateError"
-      >
-        <template #user>
-          <div>
-            表单自定义插槽
-            <a-button class="btn" @click="empty">清空表单</a-button>
-          </div>
-        </template>
-        <template slot="tab1">tab切换</template>
-        <template slot="tab2">tab2222切换</template>
-      </t-antd-module-form>
-      <t-antd-module-form
-        :visible.sync="visible1"
-        title="详情页面"
-        sub-title="多块详情页面"
-        handleType="desc"
-        :descData="descData"
-        :get-container="()=> $el"
-        :tabs="tabs"
-        @tabsChange="tabsChange1"
-      >
-        <!-- 自定义插槽 -->
-        <template slot="desc2">
-          <a-button>自定义插槽</a-button>
-          <a-button>自定义插槽</a-button>
-        </template>
-        <template slot="extra">
-          <a-button>按钮1</a-button>
-          <a-button>按钮2</a-button>
-        </template>
-        <!-- value自定义插槽 -->
-        <template #text>
-          <div>value自定义插槽</div>
-        </template>
-        <template slot="tab1">tab切换</template>
-        <template slot="tab2">tab2222切换</template>
-      </t-antd-module-form>
-    </t-antd-layout-page>
-  </div>
+      />
+    </t-antd-layout-page-item>
+  </t-antd-layout-page>
 </template>
 <script>
-import { Input, Select, Slider, DatePicker, Radio, Checkbox, Switch } from 'ant-design-vue'
 export default {
-  name: 'dh-layout-form-demo',
+  name: 'TModuleFormDemoBase',
   data() {
     return {
-      visible: false,
-      visible1: false,
-      tabs: [
-        {
-          key: 'tab1',
-          title: '物料管理'
-        },
-        {
-          key: 'tab2',
-          title: '物料管理22'
-        }
-      ],
       formOpts: {
-        form1: {
-          title: '基础信息',
+        goodsInformation: {
+          title: '货品信息',
+          name: 'goodsInformation',
+          ref: null,
           opts: {
-            data1: {
-              label: '姓名',
-              gutter: 4,
-              rules: [
-                { required: true, message: '请输入姓名', trigger: 'blur' },
-                { min: 3, max: 5, message: '长度3到5个字符', trigger: 'blur' },
+            formData: {
+              id: `${Math.floor(Math.random() * 10 + 1)}`, // *唯一ID
+              account: undefined, // *用户账号
+              password: undefined, // *用户密码
+              name: undefined, // *用户昵称
+              sex: undefined, // *性别: 0:男 1:女
+              hobby: [], // *爱好: 0:男 1:女
+              accountType: undefined, // *用户类型: 0: 手机注册 1: 论坛注册 2: 管理平台添加
+              status: undefined // *状态: 0：停用，1：启用(默认为1)',
+            },
+            fieldList: [
+              { label: '账号', value: 'account', type: 'input', comp: 'a-input', event: 'account' },
+              { label: '密码', value: 'password', type: 'password', comp: 'a-input' },
+              { label: '昵称', value: 'name', type: 'input', comp: 'a-input' },
+              { label: '性别', value: 'sex', type: 'select-arr', comp: 'a-select', list: 'sexList', bind: { disabled: false }, arrLabel: 'key', arrKey: 'value' },
+              { label: '平台用户', value: 'accountType', type: 'select-obj', comp: 'a-select', list: 'accountTypeList' },
+              { label: '状态', value: 'status', type: 'select-arr', list: 'statusList', comp: 'a-select', arrLabel: 'key', arrKey: 'value' },
+              { label: '爱好', value: 'hobby', type: 'checkbox', comp: 'a-checkbox-group', list: 'hobbyList', event: 'checkbox', widthSize: 1 }
+            ],
+            // 相关列表
+            listTypeInfo: {
+              hobbyList: [
+                { label: '吉他', value: '0' },
+                { label: '看书', value: '1' },
+                { label: '美剧', value: '2' },
+                { label: '旅游', value: '3' },
+                { label: '音乐', value: '4' }
               ],
-              bind: {
-                allowClear: true
+              sexList: [
+                { key: '女', value: 1 },
+                { key: '男', value: 0 }
+              ],
+              accountTypeList: {
+                0: '手机用户',
+                1: '论坛用户',
+                2: '平台用户'
               },
-              comp: Input
-            },
-            data2: {
-              label: '性别',
-              comp: Select,
-              changeEvent: 'change',
-              bind: {
-                placeholder: '请选择'
-              },
-              child: [
-                {
-                  comp: Select.Option,
-                  text: '男',
-                  value: '0'
-                },
-                {
-                  comp: Select.Option,
-                  text: '女',
-                  value: '1'
-                }
+              statusList: [
+                { key: '启用', value: 1 },
+                { key: '停用', value: 0 }
               ]
-            },
-            data3: {
-              label: '地址',
-              comp: Input
-            },
-            data4: {
-              label: '滑动输入',
-              comp: Slider,
-              changeEvent: 'change',
-            },
-            data5: {
-              label: '日期选择',
-              comp: DatePicker,
-              changeEvent: 'change',
-            },
-            data6: {
-              label: '单选',
-              comp: Radio.Group,
-              changeEvent: 'change',
-              bind: {
-                options: [
-                  {
-                    label: '选型1',
-                    value: 1
-                  },
-                  {
-                    label: '选型2',
-                    value: 2
-                  },
-                  {
-                    label: '选型3',
-                    value: 3
-                  }
-                ]
-              }
-            },
-            data7: {
-              label: '多选',
-              comp: Checkbox.Group,
-              changeEvent: 'change',
-              bind: {
-                options: [
-                  {
-                    label: '选型1',
-                    value: 1
-                  },
-                  {
-                    label: '选型2',
-                    value: 2
-                  },
-                  {
-                    label: '选型3',
-                    value: 3
-                  }
-                ]
-              }
-            },
-            data8: {
-              label: '开关',
-              comp: Switch,
-              changeEvent: 'change'
             }
           }
         },
-        form2: {
-          title: '附属信息',
+        freight: {
+          title: '运费信息',
+          name: 'freight',
           opts: {
-            data1: {
-              label: '姓名',
-              comp: Input,
-              // rules: [
-              //   { required: true, message: '请输入姓名', trigger: 'blur' },
-              //   { min: 3, max: 5, message: '长度3到5个字符', trigger: 'blur' },
-              // ],
+            formData: {
+              phone: '', // 手机号码
+              createDate: '', // 创建时间
+              valDate: [null, null], // el日期选择范围
+              wechat: '', // 微信
+              qq: '', // qq
+              email: '', // 邮箱
+              desc: '', // 描述
+              number: '' // 计算器
             },
-            data2: {
-              label: () => {
-                return (
-                  <div style="display:flex;align-items: center;">
-                    <div class="form-required">性别</div>
-                    <a-popover>
-                      <template slot="content">
-                        <span>总质量4.5吨及以下普通货运车辆的，可填“车籍地6位行政区域代码+000000”。</span>
-                      </template>
-                      <a-icon type="exclamation-circle" style="cursor: pointer;margin-left:3px;" />
-                    </a-popover>
-                  </div>
-                )
-              },
-              comp: Select,
-              changeEvent: 'change',
-              bind: {
-                placeholder: '请选择'
-              },
-              child: [
-                {
-                  comp: Select.Option,
-                  text: '男',
-                  value: '0'
-                },
-                {
-                  comp: Select.Option,
-                  text: '女',
-                  value: '1'
-                }
-              ]
-            },
-            data3: {
-              label: '地址',
-              comp: Input
-            },
-            data4: {
-              label: '滑动输入',
-              comp: Slider,
-              changeEvent: 'change',
-            },
-            text: {
-              label: '日期选择',
-              comp: DatePicker,
-              changeEvent: 'change',
-              rules: [
-                { required: true, message: '请选择日期选择', trigger: 'change' }
-              ]
-            },
-            data6: {
-              label: '单选',
-              comp: Radio.Group,
-              changeEvent: 'change',
-              bind: {
-                options: [
-                  {
-                    label: '选型1',
-                    value: 1
-                  },
-                  {
-                    label: '选型2',
-                    value: 2
-                  },
-                  {
-                    label: '选型3',
-                    value: 3
-                  }
-                ]
-              }
-            },
-            data7: {
-              label: '多选',
-              comp: Checkbox.Group,
-              changeEvent: 'change',
-              bind: {
-                options: [
-                  {
-                    label: '选型1',
-                    value: 1
-                  },
-                  {
-                    label: '选型2',
-                    value: 2
-                  },
-                  {
-                    label: '选型3',
-                    value: 3
-                  }
-                ]
-              }
-            },
-            data8: {
-              label: '开关',
-              comp: Switch,
-              changeEvent: 'change'
-            }
+            fieldList: [
+              { label: '手机号码', value: 'phone', type: 'input', comp: 'a-input', bind: { maxLength: 11 } },
+              { label: '创建时间', value: 'createDate', isSelfCom: true, bind: {}, comp: 'a-date-picker' },
+              { label: '日期范围', value: 'valDate', isSelfCom: true, comp: 'a-range-picker', bind: { separator: '-' } },
+              { label: '微信', value: 'wechat', type: 'input', comp: 'a-input' },
+              { label: 'QQ', value: 'qq', type: 'input', comp: 'a-input' },
+              { label: '邮箱', value: 'email', type: 'input', comp: 'a-input' },
+              { label: '计数器', value: 'number', type: 'inputNumber', bind: { controls: false, min: 2, max: 99 }, comp: 'a-input-number' },
+              { label: '描述', value: 'desc', type: 'textarea', comp: 'a-input', widthSize: 1 }
+            ]
           }
         },
-        form3: {
-          title: '自定义插槽',
-          slotName: 'user'
-        }
-      },
-      descData: {
-        desc: {
-          // title: '随便一个',
-          data: [
-            {
-              label: '字段1',
-              slotName: 'text',
-              value: '内容1'
+        loadingDate: {
+          name: 'loadingDate',
+          title: '承运信息',
+          ref: null,
+          opts: {
+            formData: {
+              id: `${Math.floor(Math.random() * 10 + 1)}`, // *唯一ID
+              createDate: '', // 创建时间
+              valDate: [null, null], // el日期选择范围
+              qq: '', // qq
+              accountType: '', // *用户类型: 0: 手机注册 1: 论坛注册 2: 管理平台添加
+              email: '', // 邮箱
+              desc: '', // 描述
+              number: '', // 计算器
+              status: '' // *状态: 0：停用，1：启用(默认为1)',
             },
-            {
-              label: '字段2',
-              value: '内容2'
-            },
-            {
-              label: '字段3',
-              value: '内容3',
-            },
-            {
-              label: '字段4',
-              value: '内容4'
-            },
-            {
-              label: '字段5',
-              value: '内容5'
-            },
-            {
-              label: '字段6',
-              value: '666666',
-              tooltip() {
-                return (<div>666666</div>)
-              }
-            },
-            {
-              label: '字段7',
-              value: '内容7'
-            },
-            {
-              label: '字段8',
-              value: '内容8'
-            },
-            {
-              label: '字段9',
-              value: '内容9'
+            fieldList: [
+              { label: '创建时间', value: 'createDate', isSelfCom: true, bind: {}, comp: 'a-date-picker' },
+              { label: '日期范围', value: 'valDate', isSelfCom: true, comp: 'a-range-picker', bind: { separator: '-' } },
+              { label: 'QQ', value: 'qq', type: 'input', comp: 'a-input' },
+              { label: '邮箱', value: 'email', type: 'input', comp: 'a-input' },
+              { label: '计数器', value: 'number', type: 'inputNumber', bind: {}, comp: 'a-input-number' },
+              { label: '描述', value: 'desc', type: 'textarea', comp: 'a-input', widthSize: 1 }
+            ],
+            // 相关列表
+            listTypeInfo: {
+              sexList: [
+                { key: '女', value: 1 },
+                { key: '男', value: 0 }
+              ],
+              accountTypeList: {
+                0: '手机用户',
+                1: '论坛用户',
+                2: '平台用户'
+              },
+              statusList: [
+                { key: '启用', value: 1 },
+                { key: '停用', value: 0 }
+              ]
             }
-          ]
-        },
-        desc1: {
-          title: '随便一个22',
-          data: [
-            {
-              label: '字段1',
-              value: '内容1'
-            },
-            {
-              label: '字段2',
-              value: '内容2'
-            },
-            {
-              label: '字段3',
-              value: '内容3',
-            },
-            {
-              label: '字段4',
-              value: '内容4'
-            },
-            {
-              label: '字段5',
-              value: '内容5'
-            },
-            {
-              label: '字段6',
-              value: '内容6'
-            }
-          ]
-        },
-        desc2: {
-          title: '自定义插槽',
-          slotName: 'desc2'
+          }
         }
       }
     }
   },
+  // 方法
   methods: {
-    // 错误校验
-    validateError(form) {
-      console.log('错误校验', form)
-    },
-    // tabs切换
-    tabsChange1(val) {
-      console.log('tabs切换', val)
-    },
-    // 清空表单
-    empty() {
-      this.$refs.layoutForm.resetFormFields()
-    },
-    clickHandle() {
-      this.visible = true
-    },
-    clickHandle1() {
-      this.visible1 = true
-    },
-    submit(form) {
-      return new Promise(resolve => {
-        setTimeout(() => {
-          resolve()
-          console.log('form', form)
-        }, 3000)
-      })
+    // 提交form表单
+    submit(data) {
+      console.log('最终提交数据', data)
     }
   }
 }
 </script>
-<style lang="scss" scoped>
-.complex_form_table {
-  padding: 0;
-  ::v-deep .dh_layout_page_item {
-    margin: 0;
-    padding: 0;
-  }
-}
-</style>

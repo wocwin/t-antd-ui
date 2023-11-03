@@ -299,10 +299,10 @@ export default {
 }
 .styleModule {
   background-color: #f0f2f5;
-  .t_layout_page_item {
+  .t_antd_layout_page_item {
     margin: 0;
     padding: 0;
-    .t_module_form {
+    .t_antd_module_form {
       overflow: hidden;
       margin: 0 !important;
     }
